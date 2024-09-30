@@ -12,7 +12,7 @@ pipenv install
 4. Activate the virtual environment:
 pipenv shell
 
-## 사용 방법
+## Usage
 
 1. Insert PDF files into OpenSearch:
 python insert_pdfpages_to_opensearch.py
