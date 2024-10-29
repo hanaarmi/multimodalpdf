@@ -22,18 +22,18 @@ def preprocessing():
     extractpdf.extract_images_and_metadata(pdffile, savedir)
 
     # Create a Bedrock session for Claude 3.5 Sonnet model
-    bedrock_session_sonnet35 = bedrock.get_bedrock_session(
+    bedrock_session = bedrock.get_bedrock_session(
         os.getenv("AWS_ACCESS_KEY_ID"),
         os.getenv("AWS_SECRET_ACCESS_KEY"),
         os.getenv("AWS_REGION")
     )
 
     # Get the model ID for Claude 3.5 Sonnet
-    bedrock_modelid_sonnet35 = os.getenv("BEDROCK_SONNET35_MODEL_ID")
+    bedrock_modelid = os.getenv("BEDROCK_MODEL_ID")
 
     # Extract images, captions, and metadata from the PDF using Claude 3.5 Sonnet
     metadata_file = extractpdf.extract_images_caption_and_metadata(
-        pdffile, savedir, bedrock_session=bedrock_session_sonnet35, bedrock_modelid=bedrock_modelid_sonnet35)
+        pdffile, savedir, bedrock_session=bedrock_session, bedrock_modelid=bedrock_modelid)
 
 
 def insert_to_opensearch():
@@ -51,6 +51,5 @@ def insert_to_opensearch():
     opensearch.insert_metadata_to_opensearch(
         metadata_file, bedrock_session, os.getenv("OPENSEARCH_ENDPOINT"), os.getenv("OPENSEARCH_INDEX_NAME"), os.getenv("OPENSEARCH_USERNAME"), os.getenv("OPENSEARCH_PASSWORD"))
 
-
-# preprocessing()
+preprocessing()
 insert_to_opensearch()
