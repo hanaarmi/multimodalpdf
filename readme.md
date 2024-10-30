@@ -1,3 +1,21 @@
+## (Optional) Setting in EC2
+
+1. Launch instance (e.g. Amazon Linux)
+
+2. Run below command for setting dev envrionment. (This might vary depending on
+   your environment.)
+
+```bash
+curl https://pyenv.run | bash # You will need to modify your .bashrc according to the pyenv prompts.
+sudo yum install git
+pyenv install 3.12.7 # This app use python 3.12.7
+sudo yum update
+sudo yum groupinstall "Development Tools" -y
+sudn dnf install openssl-devel bzip2-devel libffi-devel zlib-devel -y
+pyenv global 3.12.7
+pip instal pipenv
+```
+
 ## Environment Setup
 
 1. Clone this repository: git clone [repository URL]
@@ -14,13 +32,16 @@
 
 ## Opensearch
 
-1. This repo is build for opensearch managed cluster, not serverless. You must
-   make opensearch cluster before run.
+1. This repo is built for opensearch managed cluster, not serverless. You must
+   make opensearch cluster before running this app.
 
 2. After creating opensearch cluster, you should associate analysis-nori
    packages first.
 
-3. In devtools, make your index with name same as you set in .env file
+3. To use devtools in your local, you should set Access Policy in Security
+   configuration tab.
+
+4. In devtools, make your index with name same as you set in .env file
 
 ```
 PUT /[INDEX-NAME]
@@ -80,6 +101,9 @@ PUT /[INDEX-NAME]
 1. Insert PDF files into OpenSearch: python insert_pdfpages_to_opensearch.py
 
 2. Run the Streamlit demo: streamlit run streamlit_chat_demo.py
+   - if you run in ec2 : streamlit run streamlit_chat_demo.py --server.port 8080
+     --server.address 0.0.0.0
+   - you should open firewall in security group to your local
 
 ## Notes
 
